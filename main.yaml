@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ lookup('env', 'HOME') }}/.kube/config"
+  vars_files:
+    - vars/ocp.yaml
+    - vars/sro.yaml
+  become: true
+  become_method: sudo
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - patch
+
+- hosts: workers
+  become: true
+  become_method: sudo
+  serial: 1
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars_files:
+    - vars/ocp.yaml
+    - vars/sro.yaml
+  roles:
+    - reboot

@@ -1,0 +1,13 @@
+- name: Individual tasks for each node
+  block:
+  - name: Cordon and drain
+    include_tasks: drain.yaml
+
+  - name: Delete old SRO Pods
+    include_tasks: delete_sro_pods.yaml
+
+  - name: Reboot node
+    include_tasks: rebootnode.yaml
+
+  - name: Uncordon
+    include_tasks: uncordon.yaml

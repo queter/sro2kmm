@@ -1,0 +1,23 @@
+---
+- name: Patch SRO DaemonSet
+  k8s:
+    verify_ssl: false
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    api_version: apps/v1
+    kind: DaemonSet
+    state: present
+    namespace: "{{ sro_ds_ns }}"
+    name: "{{ sro_ds }}"
+    definition: |
+      spec:
+       updateStrategy:
+         type: OnDelete
+       template:
+         spec:
+          containers:
+            - name: kmm-kmod-driver-container
+              lifecycle:
+                postStart:
+                  exec:
+                    command: ["sleep", "infinity"]
+  register: output

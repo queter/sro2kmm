@@ -1,0 +1,3 @@
+ocp_cluster_ip: api.ebl.43cu.p1.openshiftapps.com
+ocp_cluster_username: cluster-admin
+ocp_cluster_password: xxx-xxx-xxx

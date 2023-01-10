@@ -1,0 +1,11 @@
+- name: Login and patch SRO DaemonSet in cluster
+  block:
+  - name: Login to OCP cluster
+    include_tasks: ocplogin.yaml
+
+  - name: Backup existing SRO DaemonSet
+    include_tasks: backupds.yaml
+
+  - name: Patch SRO DaemonSet
+    include_tasks: patchds.yaml
+

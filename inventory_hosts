@@ -1,0 +1,7 @@
+[masters]
+test-infra-cluster-205a583b-master-0
+test-infra-cluster-205a583b-master-1
+test-infra-cluster-205a583b-master-2
+[workers]
+test-infra-cluster-205a583b-worker-0
+test-infra-cluster-205a583b-worker-1

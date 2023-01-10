@@ -1,0 +1,5 @@
+---
+- name: Reboot node {{ inventory_hostname }}
+  ansible.builtin.reboot:
+    reboot_timeout: 60
+    test_command: uptime
