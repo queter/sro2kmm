@@ -1,5 +1,6 @@
 ---
 - name: Mark node "{{ inventory_hostname }}" as unschedulable.
   kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
     state: cordon
     name: {{ inventory_hostname }}

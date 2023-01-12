@@ -1,7 +1,12 @@
 [masters]
-test-infra-cluster-205a583b-master-0
-test-infra-cluster-205a583b-master-1
-test-infra-cluster-205a583b-master-2
+ip-10-0-136-178.eu-west-3.compute.internal
+ip-10-0-167-21.eu-west-3.compute.internal
+ip-10-0-203-88.eu-west-3.compute.internal
 [workers]
-test-infra-cluster-205a583b-worker-0
-test-infra-cluster-205a583b-worker-1
+ip-10-0-140-122.eu-west-3.compute.internal
+ip-10-0-171-161.eu-west-3.compute.internal
+ip-10-0-202-233.eu-west-3.compute.internal
+[workers:vars]
+ansible_user=core
+ansible_ssh_private_key_file=/root/nodes.pem
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
