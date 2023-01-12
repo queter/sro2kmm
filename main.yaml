@@ -21,3 +21,5 @@
     - vars/sro.yaml
   roles:
     - reboot
+  environment:
+    K8S_AUTH_KUBECONFIG: /opt/kubeconfig

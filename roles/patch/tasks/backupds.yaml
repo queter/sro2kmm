@@ -1,3 +1,6 @@
+- name: Debug k8s
+  debug:
+    msg: "La variable es {{ k8s_auth_results.k8s_auth.api_key }}"
 - name: Get an existing Service object
   kubernetes.core.k8s_info:
     api_version: v1

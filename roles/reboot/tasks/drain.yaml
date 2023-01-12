@@ -1,8 +1,9 @@
 ---
 - name: Drain node "{{ inventory_hostname }}", but abort if there are pods not managed by a ReplicationController, Job, or DaemonSet, and use a grace period of 15 minutes.
   kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
     state: drain
-    name: {{ inventory_hostname }}
+    name: "{{ inventory_hostname }}"
     delete_options:
         terminate_grace_period: 900
         ignore_daemonsets: true
