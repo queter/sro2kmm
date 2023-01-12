@@ -16,8 +16,8 @@ A computer with:
 - Ansible package installed.
 
 ## Usage
-First `vars/ocp.yaml` should be modified with the OpenShift cluster credentials.
-Then the name of the DaemonSet to migrate and its NameSpace has to set at `vars/sro_ds.yaml`
+Modify `vars/ocp.yaml` to match your OpenShift cluster credentials.
+Set the name of the DaemonSet to migrate and its NameSpace at `vars/sro_ds.yaml`
 
 Run `sro2kmm` script to begin the migration. It will run the playbook against `inventory_hosts` file which is made by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run.
 
