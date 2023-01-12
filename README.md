@@ -20,6 +20,8 @@ Set the name of the DaemonSet to migrate and its NameSpace at `vars/sro_ds.yaml`
 
 Run `sro2kmm` script to begin the migration. It will run the playbook against `inventory_hosts` file which is made by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run.
 
+**ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access.
+
  
 
 
