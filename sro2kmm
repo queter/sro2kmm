@@ -1,2 +1,2 @@
 #!/bin/bash
-ansible-playbook -i inventory_hosts main.yaml -vvv
+./cluster_inventory.sh && ansible-playbook -i inventory_hosts main.yaml -vvv
