@@ -1,6 +1,6 @@
 ## Overview
 
-`sro2kmm` is a shell script running an Ansible playbook in specific nodes of an existing OpenShift cluster in order to migrate the kernel modules loaded by Special Resource Operator (SRO) to the newer Kernel Module Management operator (KMM).
+`sro2kmm` is a shell script running an Ansible playbook in specific nodes of an existing OpenShift cluster in order to migrate the kernel modules loaded by [Special Resource Operator (SRO)](https://github.com/openshift/special-resource-operator) to the newer [Kernel Module Management operator (KMM)](https://github.com/rh-ecosystem-edge/kernel-module-management).
 
 ## Requirements
 
@@ -12,7 +12,7 @@ A computer with:
 - Openshift Client (`oc`) with access to OpenShift cluster.
 - SSH access to Openshift cluster nodes.
 - Ansible and Kubernetes python packages installed: `python3 -m pip install ansible kubernetes`
-(Tested on Ansible 2.13.7 and Python 3.8.15.)
+(Tested on Ansible 2.13.7 and Python 3.8.15.). Further info at [Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/index.html).
 
 ## Usage
 Modify `vars/ocp.yaml` to match your OpenShift cluster credentials.
