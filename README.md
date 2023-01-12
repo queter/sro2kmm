@@ -22,6 +22,23 @@ Run `sro2kmm` script to begin the migration. It will run the playbook against `i
 
 **ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access.
 
- 
+## Workflow
+Running main playbook triggers the following process:
+
+### From machine running sro2kmm 
+- Login to OCP cluster
+- Dump a description of existing SRO DaemonSet to a local file `sro_ds_backup.yaml`
+- Patch SRO DaemonSet setting **UpdateStrategy** to **OnDelete** and switching the `modprobe` command for a `sleep infinity` command.
+
+### In every cluster node in **workers** group
+- Install needed python modules (pyyaml, kubernetes)
+- Upload kubeconfig from local to node to match user running script
+- Login to OCP cluster to get an API key for next tasks
+- Cordon node to not allow new workloads
+- Drain node to move existing workloads to other nodes
+- Delete old SRO managed pods
+- Reboot node
+- Uncordon node
+
 
 
