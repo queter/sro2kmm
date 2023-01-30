@@ -5,7 +5,16 @@
     state: drain
     name: "{{ inventory_hostname }}"
     delete_options:
-        terminate_grace_period: 900
-        ignore_daemonsets: true
-        delete_emptydir_data: true
-        force: true
+        disable_eviction: "{{ disable_eviction | default(omit) }}"
+        ignore_daemonsets: "{{ ignore_daemonsets | default(omit) }}"
+        delete_emptydir_data: "{{ delete_emptydir_data | default(omit) }}"
+        force: "{{ force | default(omit) }}"
+        terminate_grace_period: "{{ terminate_grace_period | default(omit) }}"
+        wait_sleep: "{{ wait_sleep | default(omit) }}"
+        wait_timeout: "{{ wait_timeout | default(omit) }}"
+- name: Save drain status to "{{ inventory_hostname }}"
+  copy:
+    dest: "/var/tmp/sro2kmm.status"
+    content: |
+      drain
+

@@ -1,2 +1,4 @@
-sro_ds: kmm-kmod-driver-container-9e0b65fd12854e77 
-sro_ds_ns: kmm-kmod
+sro_ds_ns: openafs-kmod
+sro_ds:
+   - openafs-kmod-driver-container-84cf84b436bf3cf9
+   - openafs-test-server

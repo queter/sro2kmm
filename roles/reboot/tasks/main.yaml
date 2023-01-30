@@ -12,7 +12,10 @@
   - name: Login to OCP cluster and get API KEY
     include_tasks: ocplogin.yaml
 
-  - name: Cordon and drain
+  - name: Cordon node
+    include_tasks: cordon.yaml
+
+  - name: Drain node
     include_tasks: drain.yaml
 
   - name: Delete old SRO Pods

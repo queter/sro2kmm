@@ -4,3 +4,9 @@
     api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
     state: cordon
     name: {{ inventory_hostname }}
+- name: Save cordon status to "{{ inventory_hostname }}"
+  copy:
+    dest: "/var/tmp/sro2kmm.status"
+    content: |
+      cordon
+

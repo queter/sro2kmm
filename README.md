@@ -9,18 +9,23 @@ A running Openshift Cluster with:
 - Kernel Module Management operator installed and wanted Pods running the same kernel module name as in SRO workload.
 
 A computer with:
+- Installed [dialog](https://invisible-island.net/dialog/) package. Available in most distributions.
 - Openshift Client (`oc`) with access to OpenShift cluster.
 - SSH access to Openshift cluster nodes.
 - Ansible and Kubernetes python packages installed: `python3 -m pip install ansible kubernetes`
 (Tested on Ansible 2.13.7 and Python 3.8.15.). Further info at [Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/index.html).
 
 ## Usage
-Modify `vars/ocp.yaml` to match your OpenShift cluster credentials.
-Set the name of the DaemonSet to migrate and its NameSpace at `vars/sro_ds.yaml`
 
-Run `sro2kmm` script to begin the migration. It will run the playbook against `inventory_hosts` file which is made by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run.
+Run `sro2kmm` script to begin the migration.
 
-**ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access.
+There are only two possible arguments to be used by the script. One is the name of the `SpecialResource` that you intend to migrate, which is a mandatory argument.
+Second argument is related to the settings applied to the kubernetes [k8s_drain](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameters) module, specifically the delete options used by it. Optional `--dsettings`.
+
+
+It will open a dialog menu where all DaemonSets owned by the specified SpecialResource will be shown. After choice, the playbook will be run against `inventory_hosts` file which is made background by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run. `cluster_inventory.sh` can be customized to fit your needs.
+
+**ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access. Any user and key which is capable of sudo at hosts can be used here.
 
 ## Workflow
 Running main playbook triggers the following process:
@@ -40,5 +45,9 @@ Running main playbook triggers the following process:
 - Reboot node
 - Uncordon node
 
-
+[WIP]:
+- Checks for successful tasks outside ansible.
+- Checks for pod volume status.
+- Control check for remaining tasks per host.
+- Numeric dialog menu for timeout delete settings.
 
