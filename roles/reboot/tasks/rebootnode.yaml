@@ -3,3 +3,9 @@
   ansible.builtin.reboot:
     reboot_timeout: 3600
     test_command: uptime
+- name: Save reboot status to "{{ inventory_hostname }}"
+  copy:
+    dest: "/var/tmp/sro2kmm.status"
+    content: |
+      reboot
+

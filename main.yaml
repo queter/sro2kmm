@@ -19,6 +19,7 @@
   vars_files:
     - vars/ocp.yaml
     - vars/sro.yaml
+    - vars/dsettings.yaml
   roles:
     - reboot
   environment:
