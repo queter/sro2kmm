@@ -9,6 +9,7 @@ A running Openshift Cluster with:
 - Kernel Module Management operator installed and wanted Pods running the same kernel module name as in SRO workload.
 
 A computer with:
+
 - Installed [dialog](https://invisible-island.net/dialog/) package. Available in most distributions.
 - Openshift Client (`oc`) with access to OpenShift cluster.
 - SSH access to Openshift cluster nodes.
@@ -17,15 +18,16 @@ A computer with:
 
 ## Usage
 
-Run `sro2kmm` script to begin the migration.
+Run `sro2kmm [sr_ name] --dsettings` script to begin the migration.
 
 There are only two possible arguments to be used by the script. One is the name of the `SpecialResource` that you intend to migrate, which is a mandatory argument.
 Second argument is related to the settings applied to the kubernetes [k8s_drain](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameters) module, specifically the delete options used by it. Optional `--dsettings`.
 
 
-It will open a dialog menu where all DaemonSets owned by the specified SpecialResource will be shown. After choice, the playbook will be run against `inventory_hosts` file which is made background by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run. `cluster_inventory.sh` can be customized to fit your needs.
+DaemonSets owned by the specified SpecialResource will be shown in a selection menu. After user's choice, the playbook will be run using the file `inventory_hosts`  which is automatically created in the background by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run. `cluster_inventory.sh` can be customized to fit your needs and host group names.
 
-**ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access. Any user and key which is capable of sudo at hosts can be used here.
+**ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access them.
+Any user and key which is capable of sudo at hosts can be used here.
 
 ## Workflow
 Running main playbook triggers the following process:
