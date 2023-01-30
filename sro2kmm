@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#set -e
-set -eoxu pipefail
+set -e
+#set -eoxu pipefail
 # Clean old temp files
 rm -f temp/* || true
 
@@ -18,8 +18,14 @@ if [ -z "$1" ]; then
     echo "USAGE: sro2kmm [SpecialResource name] --dsettings <optional drain delete settings>"
     exit 1
 fi
-if [[ $2 == "--dsettings" ]]; then
+#
+if [ -z "$2" ]; then
+    setdmenu="0"
+elif [[ $2 == "--dsettings" ]]; then
     setdmenu="1"
+else
+    echo "Not valid drain options. Use --dsettings"
+    exit 1
 fi
 # Set variables
 sr=$1
@@ -63,7 +69,7 @@ add_sro_variables
 # Create settings menu for drain delete options
 if [[ $setdmenu == "1" ]]; then
    ## Boolean settings
-   fundmenu1=(dialog --stdout --separate-output --checklist "Delete Settings 1" 22 50 10)
+   fundmenu1=(dialog --stdout --separate-output --checklist "Delete Settings for SRO DS"  22 50 10)
    options1=(1 "Delete emptydir data" off \
      2 "Disable eviction" off \
      3 "Force" off \
