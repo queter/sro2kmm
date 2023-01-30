@@ -1,5 +1,11 @@
 - name: Login and patch SRO DaemonSet in cluster
   block:
+  - name: Install pre-requisites modules
+    pip:
+      name:
+        - openshift
+        - pyyaml
+        - kubernetes
   - name: Login to OCP cluster
     include_tasks: ocplogin.yaml
 
