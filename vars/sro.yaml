@@ -1,4 +1,3 @@
 sro_ds_ns: openafs-kmod
 sro_ds:
    - openafs-kmod-driver-container-84cf84b436bf3cf9
-   - openafs-test-server
