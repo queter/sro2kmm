@@ -18,13 +18,18 @@ A computer with:
 
 ## Usage
 
-Run `sro2kmm [sr_ name] --dsettings` script to begin the migration.
+Run `sro2kmm [sr_name] --dsettings` script to begin the migration.
 
 There are only two possible arguments to be used by the script. One is the name of the `SpecialResource` that you intend to migrate, which is a mandatory argument.
-Second argument is related to the settings applied to the kubernetes [k8s_drain](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameters) module, specifically the delete options used by it. Optional `--dsettings`.
+Second argument is related to the settings applied to the kubernetes [k8s_drain](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameters) module, specifically the delete options used by it. Optional delete settings can be set adding argument `--dsettings` to the script which will show a checklist for the user to choose:
+
+- [delete_emptydir_data](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameter-delete_options/delete_emptydir_data)
+- [disable_eviction](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameter-delete_options/disable_eviction)
+- [force](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameter-delete_options/force)
+- [ignore_daemonsets](https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_drain_module.html#parameter-delete_options/ignore_daemonsets)
 
 
-DaemonSets owned by the specified SpecialResource will be shown in a selection menu. After user's choice, the playbook will be run using the file `inventory_hosts`  which is automatically created in the background by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run. `cluster_inventory.sh` can be customized to fit your needs and host group names.
+DaemonSets owned by the specified SpecialResource will be shown in the main selection menu. After user's choice, the playbook will be run using the file `inventory_hosts`  which is automatically created in the background by the shell script `cluster_inventory.sh` to create a `workers` inventory group where the roles will be run. `cluster_inventory.sh` can be customized to fit your needs and host group names.
 
 **ANSIBLE_USER** and **ANSIBLE_SSH_KEY** variables at `cluster_inventory.sh` may be modified to change ssh user for remote nodes as well as the private key needed to access them.
 Any user and key which is capable of sudo at hosts can be used here.
