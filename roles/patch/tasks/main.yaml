@@ -6,6 +6,12 @@
         - openshift
         - pyyaml
         - kubernetes
+
+  - name: Install jq
+    ansible.builtin.package:
+      name: jq
+      state: present
+
   - name: Login to OCP cluster
     include_tasks: ocplogin.yaml
 

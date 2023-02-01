@@ -3,10 +3,15 @@
     api_version: v1
     api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
     kind: DaemonSet
-    name: "{{ sro_ds }}"
+    name: "{{ item }}"
     namespace: "{{ sro_ds_ns }}"
+  loop: "{{ lookup('file', 'temp/selected_ds').splitlines() }}"
   register: sro_ds_backup
-- local_action:
+- name: Copy DS definition backup to local
+  local_action:
     module: copy
     content: "{{ sro_ds_backup }}"
-    dest: sro_ds_backup.yaml
+    dest: sro_ds_backup.json
+- name: Register container names
+  shell: cat sro_ds_backup.json | jq '.results[].resources[].spec.template.spec.containers[].name'
+  register: ds_container_names
