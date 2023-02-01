@@ -53,16 +53,14 @@ while IFS=$'\n' read -r opt; do
 done <<< "$dslist"
 
 cmd=(dialog --backtitle "SRO2KMM" --checklist "Choose one or more SRO DaemonSets to migrate" 22 60 16)
+#Add selected Daemonsets names to temp file
 choices=($("${cmd[@]}" "${options[@]}" 2>temp/selected_ds 1>/dev/tty))
 
-#Add selected DaemonSets to playbook variable
+#Add selected DaemonSets namespace to playbook variable
 add_sro_variables()
 {
-rm -f vars/sro.yaml || true
-VARS_FILE=vars/sro.yaml
-echo "sro_ds_ns: $ns" >> $VARS_FILE
-echo "sro_ds:" >> $VARS_FILE
-cat temp/selected_ds | xargs -n1 | awk '{print "   - " $0}' >> $VARS_FILE
+rm -f vars/sro_ds_ns.yaml || true
+echo "sro_ds_ns: $ns" > vars/sro_ds_ns.yaml
 }
 add_sro_variables
 
@@ -96,4 +94,4 @@ if [[ $setdmenu == "1" ]]; then
 
 fi
 
-./cluster_inventory.sh && ansible-playbook -i inventory_hosts main.yaml -vvv
+./cluster_inventory.sh && ansible-playbook -i inventory_hosts main.yaml --ask-become-pass -vvv

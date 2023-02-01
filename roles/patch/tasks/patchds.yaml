@@ -1,5 +1,4 @@
----
-- name: Patch SRO DaemonSet
+- name: Patch SRO DaemonSets
   k8s:
     verify_ssl: false
     api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
@@ -7,7 +6,7 @@
     kind: DaemonSet
     state: present
     namespace: "{{ sro_ds_ns }}"
-    name: "{{ sro_ds }}"
+    name: "{{ item }}"
     definition: |
       spec:
        updateStrategy:
@@ -20,4 +19,6 @@
                 postStart:
                   exec:
                     command: ["sleep", "infinity"]
+  loop: "{{ lookup('file', 'temp/selected_ds').splitlines() }}"
   register: output
+

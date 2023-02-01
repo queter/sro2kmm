@@ -4,7 +4,7 @@
     K8S_AUTH_KUBECONFIG: "{{ lookup('env', 'HOME') }}/.kube/config"
   vars_files:
     - vars/ocp.yaml
-    - vars/sro.yaml
+    - vars/sro_ds_ns.yaml
   become: true
   become_method: sudo
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -18,7 +18,7 @@
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
   vars_files:
     - vars/ocp.yaml
-    - vars/sro.yaml
+    - vars/sro_ds_ns.yaml
     - vars/dsettings.yaml
   roles:
     - reboot

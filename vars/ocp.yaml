@@ -1,4 +1,4 @@
-ocp_cluster_ip: api.ebelarte.edge-sro.rhecoeng.com
+ocp_cluster_ip: api.test-infra-cluster-xxxxx.redhat.com
 ocp_cluster_username: kubeadmin
-ocp_cluster_password: mypassword
-local_kubeconfig: /root/.kube/config
+ocp_cluster_password: xxxxxxxx
+local_kubeconfig: ~/.kube/config

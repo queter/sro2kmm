@@ -1,11 +1,10 @@
 [masters]
-ip-10-0-136-178.eu-west-3.compute.internal
-ip-10-0-167-21.eu-west-3.compute.internal
-ip-10-0-203-88.eu-west-3.compute.internal
+test-infra-cluster-afc242fc-master-0
+test-infra-cluster-afc242fc-master-1
+test-infra-cluster-afc242fc-master-2
 [workers]
-ip-10-0-140-122.eu-west-3.compute.internal
-ip-10-0-171-161.eu-west-3.compute.internal
-ip-10-0-202-233.eu-west-3.compute.internal
+test-infra-cluster-afc242fc-worker-0
+test-infra-cluster-afc242fc-worker-1
 [workers:vars]
 ansible_user=core
 ansible_ssh_private_key_file=/root/nodes.pem
