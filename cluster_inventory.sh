@@ -1,6 +1,6 @@
 #!/bin/bash
 ANSIBLE_USER=core
-ANSIBLE_SSH_KEY=/root/nodes.pem
+ANSIBLE_SSH_KEY=nodes.pem
 
 MASTERS=$(oc get nodes --selector='node-role.kubernetes.io/master' -o=jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
 WORKERS=$(oc get nodes --selector='!node-role.kubernetes.io/master' -o=jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')

@@ -1,4 +1,4 @@
-ocp_cluster_ip: api.test-infra-cluster-xxxxx.redhat.com
+ocp_cluster_ip: CHANGE
 ocp_cluster_username: kubeadmin
-ocp_cluster_password: xxxxxxxx
+ocp_cluster_password: CHANGE 
 local_kubeconfig: ~/.kube/config

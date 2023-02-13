@@ -6,6 +6,7 @@
         - openshift
         - pyyaml
         - kubernetes
+        - requests
 
   - name: Install jq
     ansible.builtin.package:

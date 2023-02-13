@@ -3,6 +3,12 @@
   - name: Upload local KUBECONFIG
     include_tasks: upload_local_kubeconfig.yaml
 
+  - name: Install pre-requisites modules
+    pip:
+      name:
+        - requests
+        - requests-oauthlib
+        - kubernetes
   - name: Login to OCP cluster and get API KEY
     include_tasks: ocplogin.yaml
 
