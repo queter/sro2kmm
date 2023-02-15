@@ -15,16 +15,16 @@ fi
 # Check passed arguments $1 is SR name $2 is optional menu
 if [ -z "$1" ]; then
     echo "The SpecialResource name to be migrated should be passed as an argument."
-    echo "USAGE: sro2kmm [SpecialResource name] --dsettings <optional drain delete settings>"
+    echo "USAGE: sro2kmm [SpecialResource name] --dsmenu <show menu with optional drain delete settings>"
     exit 1
 fi
 #
 if [ -z "$2" ]; then
     setdmenu="0"
-elif [[ $2 == "--dsettings" ]]; then
+elif [[ $2 == "--dsmenu" ]]; then
     setdmenu="1"
 else
-    echo "Not valid drain options. Use --dsettings"
+    echo "Not valid drain options. Use --dsmenu"
     exit 1
 fi
 # Set variables
@@ -94,4 +94,4 @@ if [[ $setdmenu == "1" ]]; then
 
 fi
 
-./cluster_inventory.sh && ansible-playbook -i inventory_hosts main.yaml --ask-become-pass -vvv
+./cluster_inventory.sh && ansible-playbook -i inventory_hosts main.yaml -v #--ask-become-pass -vvv
