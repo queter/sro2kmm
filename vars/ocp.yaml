@@ -1,4 +1,0 @@
-ocp_cluster_ip: api.ebltest.edge-sro.rhecoeng.com 
-ocp_cluster_username: kubeadmin
-ocp_cluster_password: BJzN3-Cer83-mC7yG-WX7Fz 
-local_kubeconfig: /home/ec2-user/tmp/auth/kubeconfig  
