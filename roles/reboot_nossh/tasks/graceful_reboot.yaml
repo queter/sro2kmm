@@ -1,0 +1,47 @@
+- name: Cordon node. Mark node "{{ node }}" as unschedulable.
+  kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    state: cordon
+    name: "{{ node }}"
+  delegate_to: localhost
+
+- name: Drain node "{{ node }}", but abort if there are pods not managed by a ReplicationController, Job, or DaemonSet, and use a grace period of 15 minutes.
+  kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    state: drain
+    name: "{{ node }}"
+    delete_options:
+        disable_eviction: "{{ disable_eviction | default(omit) }}"
+        ignore_daemonsets: "{{ ignore_daemonsets | default(omit) }}"
+        delete_emptydir_data: "{{ delete_emptydir_data | default(omit) }}"
+        force: "{{ force | default(omit) }}"
+        terminate_grace_period: "{{ terminate_grace_period | default(omit) }}"
+        wait_sleep: "{{ wait_sleep | default(omit) }}"
+        wait_timeout: "{{ wait_timeout | default(omit) }}"
+
+#- name: Delete old SRO Pods before reboot
+- name: Reboot node "{{ node }}"
+  command: /usr/local/bin/oc --kubeconfig="{{ local_kubeconfig }}" debug node/"{{ node }}" -T -- chroot /host sh -c "systemctl reboot"      
+  delegate_to: localhost
+
+- name: Check to see if node "{{ node }}" is healthy 
+  command: /usr/local/bin/oc get --config="{{ local_kubeconfig }}"  --raw /api/v1/nodes/{{ node }}/proxy/healthz
+  register: node_health
+  delegate_to: localhost
+  until: node_health.stdout.find("ok")
+  delay: 10
+  retries: 5
+
+
+- name: Uncordon. Mark node "{{ node }}" as schedulable.
+  kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    state: uncordon
+    name: "{{ node }}"
+      #
+      #- name: Patch old SRO DS after reboot
+      #    include_tasks: patchds_post_reboot.yaml 
+      #
+      #- name: Delete old SRO Pods after reboot
+      #    include_tasks: delete_sro_pods.yaml
+    

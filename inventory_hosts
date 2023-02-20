@@ -1,0 +1,12 @@
+[masters]
+ip-10-0-136-94.eu-west-3.compute.internal
+ip-10-0-169-11.eu-west-3.compute.internal
+ip-10-0-223-20.eu-west-3.compute.internal
+[workers]
+ip-10-0-137-216.eu-west-3.compute.internal
+ip-10-0-171-64.eu-west-3.compute.internal
+ip-10-0-212-184.eu-west-3.compute.internal
+[workers:vars]
+ansible_user=core
+ansible_ssh_private_key_file=mykeys/ebelarte-aws.pem
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

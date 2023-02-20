@@ -1,0 +1,8 @@
+- name: Check via master proxy to see if node is healthy after cert generation
+  command: >
+            oc --config=/etc/origin/master/admin.kubeconfig get --raw /api/v1/nodes/{{inventory_hostname}}/proxy/healthz
+  register: node_health
+  delegate_to: localhost
+  until: node_health.stdout.find("ok")
+  delay: 10
+  retries: 5

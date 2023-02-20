@@ -1,0 +1,34 @@
+- name: Individual tasks for each node
+  block:
+  - name: Upload local KUBECONFIG
+    include_tasks: upload_local_kubeconfig.yaml
+
+  - name: Install pre-requisites modules
+    pip:
+      name:
+        - requests
+        - requests-oauthlib
+        - kubernetes
+  - name: Login to OCP cluster and get API KEY
+    include_tasks: ocplogin.yaml
+
+  - name: Cordon node
+    include_tasks: cordon.yaml
+
+  - name: Drain node
+    include_tasks: drain.yaml
+
+  - name: Delete old SRO Pods before reboot
+    include_tasks: delete_sro_pods.yaml
+
+  - name: Reboot node
+    include_tasks: rebootnode.yaml
+
+  - name: Uncordon
+    include_tasks: uncordon.yaml
+
+  - name: Patch old SRO DS after reboot
+    include_tasks: patchds_post_reboot.yaml 
+
+  - name: Delete old SRO Pods after reboot
+    include_tasks: delete_sro_pods.yaml

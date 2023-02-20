@@ -1,0 +1,12 @@
+---
+- name: Mark node "{{ inventory_hostname }}" as schedulable.
+  kubernetes.core.k8s_drain:
+    api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+    state: uncordon
+    name: "{{ inventory_hostname }}"
+- name: Save uncordon status to "{{ inventory_hostname }}"
+  copy:
+    dest: "/var/tmp/sro2kmm.status"
+    content: |
+      uncordon
+
