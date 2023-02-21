@@ -19,16 +19,20 @@
         wait_sleep: "{{ wait_sleep | default(omit) }}"
         wait_timeout: "{{ wait_timeout | default(omit) }}"
 
-#- name: Delete old SRO Pods before reboot
 - name: Reboot node "{{ node }}"
-  command: /usr/local/bin/oc --kubeconfig="{{ local_kubeconfig }}" debug node/"{{ node }}" -T -- chroot /host sh -c "systemctl reboot"      
+  command: /usr/local/bin/oc --kubeconfig="{{ local_kubeconfig }}" debug node/"{{ node }}" -- chroot /host shutdown -r 1 
   delegate_to: localhost
 
+- name: Wait for 2 minutes to "{{ node }}" reboot
+  ansible.builtin.pause:
+    minutes: 2
+
 - name: Check to see if node "{{ node }}" is healthy 
-  command: /usr/local/bin/oc get --config="{{ local_kubeconfig }}"  --raw /api/v1/nodes/{{ node }}/proxy/healthz
+  command: /usr/local/bin/oc get --kubeconfig="{{ local_kubeconfig }}"  --raw /api/v1/nodes/{{ node }}/proxy/healthz
   register: node_health
   delegate_to: localhost
   until: node_health.stdout.find("ok")
+  ignore_errors: true
   delay: 10
   retries: 5
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-set -e
-#set -eoxu pipefail
+#set -e
+set -eoxu pipefail
 # Clean old temp files
 rm -f temp/* || true
 
@@ -56,11 +56,13 @@ cmd=(dialog --backtitle "SRO2KMM" --checklist "Choose one or more SRO DaemonSets
 #Add selected Daemonsets names to temp file
 choices=($("${cmd[@]}" "${options[@]}" 2>temp/selected_ds 1>/dev/tty))
 
-#Add selected DaemonSets namespace to playbook variable
+#Add selected DaemonSets namespace and names to playbook variable
 add_sro_variables()
 {
 rm -f vars/sro_ds_ns.yaml || true
 echo "sro_ds_ns: $ns" > vars/sro_ds_ns.yaml
+echo "sro_ds:" >> vars/sro_ds_ns.yaml
+cat temp/selected_ds | while read line|| [[ -n $line ]] ; do echo "   - $line" >> vars/sro_ds_ns.yaml; done
 }
 add_sro_variables
 

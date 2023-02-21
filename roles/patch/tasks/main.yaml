@@ -17,6 +17,8 @@
   - name: Login to OCP cluster
     include_tasks: ocplogin.yaml
 
+  - name: Get Containername
+    include_tasks: get_containername.yaml
 #  - name: Backup existing SRO DaemonSet
 #    include_tasks: backupds.yaml
 #
