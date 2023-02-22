@@ -23,29 +23,28 @@
   command: /usr/local/bin/oc --kubeconfig="{{ local_kubeconfig }}" debug node/"{{ node }}" -- chroot /host shutdown -r 1 
   delegate_to: localhost
 
-- name: Wait for 2 minutes to "{{ node }}" reboot
+- name: Wait for 3 minutes to "{{ node }}" reboot
   ansible.builtin.pause:
-    minutes: 2
+    minutes: 3
 
 - name: Check to see if node "{{ node }}" is healthy 
   command: /usr/local/bin/oc get --kubeconfig="{{ local_kubeconfig }}"  --raw /api/v1/nodes/{{ node }}/proxy/healthz
   register: node_health
-  delegate_to: localhost
-  until: node_health.stdout.find("ok")
-  ignore_errors: true
-  delay: 10
+  #  delegate_to: localhost
+  until: "'ok' in node_health.stdout_lines"
+  #ignore_errors: true
+  delay: 20
   retries: 5
-
 
 - name: Uncordon. Mark node "{{ node }}" as schedulable.
   kubernetes.core.k8s_drain:
     api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
     state: uncordon
     name: "{{ node }}"
-      #
-      #- name: Patch old SRO DS after reboot
-      #    include_tasks: patchds_post_reboot.yaml 
-      #
-      #- name: Delete old SRO Pods after reboot
-      #    include_tasks: delete_sro_pods.yaml
+
+- name: Patch old SRO DS after reboot
+  include_tasks: patch_ds_postreboot.yaml 
+
+- name: Delete old SRO Pods after reboot
+  include_tasks: delete_old_pods.yaml 
     

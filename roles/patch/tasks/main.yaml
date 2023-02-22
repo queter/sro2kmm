@@ -21,7 +21,7 @@
     include_tasks: get_containername.yaml
 #  - name: Backup existing SRO DaemonSet
 #    include_tasks: backupds.yaml
-#
+
 #  - name: Patch SRO DaemonSet
 #    include_tasks: patchds.yaml
 

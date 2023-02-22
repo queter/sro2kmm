@@ -1,4 +1,4 @@
-- name: Patch SRO DaemonSets
+- name: Patch SRO DaemonSets after reboot
   k8s:
     verify_ssl: false
     api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
@@ -16,9 +16,10 @@
           containers:
             - name: "{{ ds_container_name }}" 
               lifecycle:
-                postStart:
+                preStop:
                   exec:
-                    command: ["sleep", "infinity"]
+                    command: [":"]
   loop: "{{ lookup('file', 'temp/selected_ds').splitlines() }}"
+  delegate_to: localhost
   register: output
 

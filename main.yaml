@@ -12,4 +12,4 @@
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
   roles:
     - patch
-    #- reboot_nossh
+    - reboot_nossh
